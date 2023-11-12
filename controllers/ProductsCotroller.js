@@ -14,6 +14,34 @@ class ProductsCotroller {
       })
     }
   }
+
+  async getDetailProduct(req, res) {
+    try {
+      const product = await Products.findOne({slug: req.params.slug});
+      res.render('product/detail', {
+        product: product.toObject()
+      })
+    }
+    catch(err) {
+      res.status(404).json({
+        err
+      })
+    }
+  }
+
+  async getCreateProduct(req, res) {
+    try {
+      const product = await Products.findOne({slug: req.params.slug});
+      res.render('product/detail', {
+        product: product.toObject()
+      })
+    }
+    catch(err) {
+      res.status(404).json({
+        error
+      })
+    }
+  }
 }
 
 export default new ProductsCotroller();

@@ -7,7 +7,9 @@ import { connectDB } from './config/db.js';
 import routes from './routes/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
+console.log("🚀 ~ file: index.js:10 ~ __filename:", __filename)
 const __dirname = dirname(__filename);
+console.log("🚀 ~ file: index.js:11 ~ __dirname:", __dirname)
 const app = express();
 const port = 8000;
 

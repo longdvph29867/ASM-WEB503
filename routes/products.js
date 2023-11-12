@@ -3,4 +3,5 @@ import ProductsCotroller from "../controllers/ProductsCotroller.js";
 
 const routerProduct = Router();
 routerProduct.get('/', ProductsCotroller.getAllProducts)
-export default routerProduct
+routerProduct.get('/:slug', ProductsCotroller.getDetailProduct)
+export default routerProduct;

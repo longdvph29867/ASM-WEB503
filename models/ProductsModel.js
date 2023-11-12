@@ -34,7 +34,7 @@ const productsSchema = new mongoose.Schema({
   }
 }, {
   collection: 'Products',
-  versionKey:false
+  versionKey:false,
 })
 const Products = mongoose.model('Products', productsSchema)
 
