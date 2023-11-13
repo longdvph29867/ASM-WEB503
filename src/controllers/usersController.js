@@ -1,5 +1,6 @@
 import Users from "../models/Users.js";
 import bcryptjs from "bcryptjs";
+import { userUpdateValid, userValid } from "../validations/users.js";
 class UsersCotroller {
   async getAll(req, res) {
     try {
@@ -37,6 +38,14 @@ class UsersCotroller {
 
   async create(req, res) {
     try {
+      const { error } = userValid.validate(req.body);
+      if (error) {
+        res.status(400).json({
+          message: error.details.map((item) => item.message),
+        });
+        return;
+      }
+
       const data = { ...req.body };
 
       const userExists = await Users.findOne({ account: data.account });
@@ -81,6 +90,13 @@ class UsersCotroller {
 
   async update(req, res) {
     try {
+      const { error } = userUpdateValid.validate(req.body);
+      if (error) {
+        res.status(400).json({
+          message: error.details.map((item) => item.message),
+        });
+        return;
+      }
       const data = { ...req.body };
 
       const userExists = await Users.findOne({

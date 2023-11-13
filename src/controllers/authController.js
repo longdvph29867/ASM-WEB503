@@ -1,9 +1,19 @@
 import Users from "../models/Users.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { signInValid, userValid } from "../validations/users.js";
 class AuthCotroller {
   async signUp(req, res) {
     try {
+      // validation
+      const { error } = userValid.validate(req.body);
+      if (error) {
+        res.status(400).json({
+          message: error.details.map((item) => item.message),
+        });
+        return;
+      }
+
       const data = { ...req.body };
 
       const userExists = await Users.findOne({ account: data.account });
@@ -48,6 +58,14 @@ class AuthCotroller {
 
   async signIn(req, res) {
     try {
+      // validation
+      const { error } = signInValid.validate(req.body);
+      if (error) {
+        res.status(400).json({
+          message: error.details.map((item) => item.message),
+        });
+        return;
+      }
       const data = { ...req.body };
 
       const user = await Users.findOne({ account: data.account });
