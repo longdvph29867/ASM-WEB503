@@ -10,12 +10,18 @@ const productsSchema = new mongoose.Schema(
       type: String,
       maxLength: 500,
     },
-    image: {
-      type: String,
-      maxLength: 255,
-    },
+    images: [
+      {
+        type: String,
+        maxLength: 255,
+      },
+    ],
     price: {
       type: Number,
+    },
+    gender: {
+      type: String,
+      maxLength: 25,
     },
     slug: {
       type: String,
@@ -36,6 +42,7 @@ const productsSchema = new mongoose.Schema(
   },
   {
     collection: "Products",
+    versionKey: false,
   }
 );
 const Products = mongoose.model("Products", productsSchema);

@@ -1,5 +1,8 @@
+import { Router } from "express";
 import routerCategory from "./categories.js";
+import routerProduct from "./products.js";
 
-export default function routes(app) {
-  app.use("/categories", routerCategory);
-}
+const router = Router();
+router.use("/categories", routerCategory);
+router.use("/products", routerProduct);
+export default router;
