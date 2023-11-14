@@ -5,8 +5,17 @@ import { productValid } from "../validations/products.js";
 class ProductsCotroller {
   async getAll(req, res) {
     try {
-      const products = await Products.find();
-      res.status(200).json({ data: products });
+      let products;
+      if (req.query.gender) {
+        products = await Products.find({ gender: req.query.gender });
+      } else {
+        products = await Products.find();
+      }
+
+      res.status(200).json({
+        message: "Lấy dữ liệu thành công!",
+        data: products,
+      });
     } catch (err) {
       res.status(500).json({
         name: err.name,
@@ -18,7 +27,10 @@ class ProductsCotroller {
   async getDetail(req, res) {
     try {
       const product = await Products.findOne({ slug: req.params.slug });
-      res.status(200).json({ data: product });
+      res.status(200).json({
+        message: "Lấy dữ liệu thành công!",
+        data: product,
+      });
     } catch (err) {
       res.status(500).json({
         name: err.name,
