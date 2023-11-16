@@ -1,3 +1,4 @@
+import { number } from "joi";
 import mongoose from "mongoose";
 
 const productsSchema = new mongoose.Schema(
@@ -26,6 +27,10 @@ const productsSchema = new mongoose.Schema(
     slug: {
       type: String,
       maxLength: 255,
+    },
+    rating: {
+      type: Number,
+      default: 0,
     },
     id_category: {
       type: mongoose.Schema.Types.ObjectId,
