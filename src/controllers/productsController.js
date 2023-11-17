@@ -26,7 +26,7 @@ class ProductsCotroller {
 
   async getDetail(req, res) {
     try {
-      const product = await Products.findOne({ slug: req.params.slug });
+      const product = await Products.findById(req.params.id);
       res.status(200).json({
         message: "Lấy dữ liệu thành công!",
         data: product,
