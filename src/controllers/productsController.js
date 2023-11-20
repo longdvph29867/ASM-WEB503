@@ -12,6 +12,8 @@ class ProductsCotroller {
           categorySlug: req.query.category,
         });
         products = await Products.find({ id_category: category._id });
+      } else if (req.query.category_id) {
+        products = await Products.find({ id_category: req.query.category_id });
       } else if (req.query.gender) {
         products = await Products.find({ gender: req.query.gender });
       } else {
