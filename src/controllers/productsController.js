@@ -26,7 +26,7 @@ class ProductsCotroller {
 
   async getDetail(req, res) {
     try {
-      const product = await Products.findById(req.params.id);
+      const product = await Products.findOne({ slug: req.params.slug });
       res.status(200).json({
         message: "Lấy dữ liệu thành công!",
         data: product,
@@ -91,27 +91,33 @@ class ProductsCotroller {
 
       const data = { ...req.body };
       data.slug = slugify(data.name, { lower: true });
-
-      const productExists = await Products.findOne({
-        slug: data.slug,
-        _id: { $ne: req.params.id },
-      });
-      if (productExists) {
-        return res.status(404).json({
-          message: "Sản phẩm đã tồn tại",
+      if (data.slug != req.params.slug) {
+        const productExists = await Products.findOne({
+          slug: data.slug,
         });
+        if (productExists) {
+          res.status(404).json({
+            message: "Sản phẩm đã tồn tại",
+          });
+          return;
+        }
       }
 
-      const product = await Products.findByIdAndUpdate(req.params.id, data, {
-        new: true,
-      });
+      const product = await Products.findOneAndUpdate(
+        { slug: req.params.slug },
+        data,
+        {
+          new: true,
+        }
+      );
       if (!product) {
-        return res.status(404).json({
+        res.status(404).json({
           message: "Cập nhật sản phẩm thất bại",
         });
+        return;
       }
 
-      return res.status(200).json({
+      res.status(200).json({
         message: "Cập nhật sản phẩm thành công",
         data: product,
       });

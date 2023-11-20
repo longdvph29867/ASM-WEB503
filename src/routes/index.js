@@ -9,4 +9,5 @@ router.use("/categories", routerCategory);
 router.use("/products", routerProduct);
 router.use("/users", routerUser);
 router.use("/auth", routerAuth);
+
 export default router;
