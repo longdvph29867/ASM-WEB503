@@ -1,12 +1,18 @@
 import slugify from "slugify";
 import Products from "../models/Products.js";
 import { productValid } from "../validations/products.js";
+import Categories from "../models/Categories.js";
 
 class ProductsCotroller {
   async getAll(req, res) {
     try {
       let products;
-      if (req.query.gender) {
+      if (req.query.category) {
+        const category = await Categories.findOne({
+          categorySlug: req.query.category,
+        });
+        products = await Products.find({ id_category: category._id });
+      } else if (req.query.gender) {
         products = await Products.find({ gender: req.query.gender });
       } else {
         products = await Products.find();
