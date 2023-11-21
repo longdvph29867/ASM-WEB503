@@ -6,12 +6,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const PORT = process.env.PORT;
-const URI_DB = process.env.URI_DB2;
+const URI_DB = process.env.URI_DB;
 const app = express();
 
 app.use(express.json());
 
-connectDB();
+connectDB(URI_DB);
 app.use("/", cors({ origin: "*" }), router);
 
 app.listen(PORT, () => {
