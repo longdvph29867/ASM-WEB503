@@ -90,7 +90,7 @@ class AuthCotroller {
       const accessToken = await jwt.sign({ id: user.id }, SECRET_CODE, {
         expiresIn: "30d",
       });
-      user.password = undefined;
+      user.password = null;
       res.status(200).json({
         message: "Đăng nhập thành công!",
         data: user,
