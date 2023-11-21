@@ -2,6 +2,9 @@ import Users from "../models/Users.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { signInValid, userValid } from "../validations/users.js";
+import dotenv from "dotenv";
+dotenv.config();
+const { SECRET_CODE } = process.env;
 class AuthCotroller {
   async signUp(req, res) {
     try {
@@ -84,7 +87,7 @@ class AuthCotroller {
         return;
       }
 
-      const accessToken = await jwt.sign({ id: user.id }, "dovanlong", {
+      const accessToken = await jwt.sign({ id: user.id }, SECRET_CODE, {
         expiresIn: "30d",
       });
       user.password = undefined;
