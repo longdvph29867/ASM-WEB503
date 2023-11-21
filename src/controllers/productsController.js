@@ -146,7 +146,7 @@ class ProductsCotroller {
         });
       }
       return res.status(200).json({
-        messgae: "Xoá thành công!",
+        message: "Xoá thành công!",
         data: data,
       });
     } catch (err) {
