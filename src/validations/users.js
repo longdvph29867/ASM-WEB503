@@ -18,10 +18,10 @@ export const userValid = Joi.object({
     "any.required": "Họ tên là bắt buộc!",
     "string.max": "Họ tên tối đa 50 ký tự!",
   }),
-  phoneNumber: Joi.number().required().messages({
-    "number.empty": "Số điện thoại không được để trống!",
-    "any.required": "Số điện thoại là bắt buộc!",
-    "number.base": "Số điện thoại là số!",
+  email: Joi.string().required().email().messages({
+    "string.empty": "Email không để trống",
+    "any.required": "Email là bắt buộc",
+    "string.email": "Email không đúng định dạng",
   }),
   role: Joi.string(),
 }).options({ abortEarly: false });
@@ -43,10 +43,10 @@ export const userUpdateValid = Joi.object({
     "any.required": "Họ tên là bắt buộc!",
     "string.max": "Họ tên tối đa 50 ký tự!",
   }),
-  phoneNumber: Joi.number().required().messages({
-    "number.empty": "Số điện thoại không được để trống!",
-    "any.required": "Số điện thoại là bắt buộc!",
-    "number.base": "Số điện thoại là số!",
+  email: Joi.string().required().email().messages({
+    "string.empty": "Email không để trống",
+    "any.required": "Email là bắt buộc",
+    "string.email": "Email không đúng định dạng",
   }),
   role: Joi.string(),
 }).options({ abortEarly: false });

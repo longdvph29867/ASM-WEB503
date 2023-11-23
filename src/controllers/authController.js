@@ -27,12 +27,12 @@ class AuthCotroller {
         return;
       }
 
-      const userExistsPhone = await Users.findOne({
-        phoneNumber: data.phoneNumber,
+      const userExistsEmail = await Users.findOne({
+        email: data.email,
       });
-      if (userExistsPhone) {
+      if (userExistsEmail) {
         res.status(404).json({
-          message: "Số điện thoại đã được đăng ký!",
+          message: "Email đã được đăng ký!",
         });
         return;
       }
@@ -49,7 +49,13 @@ class AuthCotroller {
 
       res.status(200).json({
         message: "Tạo tài khoản thành công!",
-        data: user,
+        data: {
+          id: user._id,
+          account: user.account,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+        },
       });
     } catch (err) {
       res.status(500).json({
@@ -90,11 +96,16 @@ class AuthCotroller {
       const accessToken = await jwt.sign({ id: user.id }, SECRET_CODE, {
         expiresIn: "30d",
       });
-      user.password = null;
       res.status(200).json({
         message: "Đăng nhập thành công!",
-        data: user,
-        accessToken,
+        data: {
+          id: user._id,
+          account: user.account,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+          accessToken: accessToken,
+        },
       });
     } catch (err) {
       res.status(500).json({

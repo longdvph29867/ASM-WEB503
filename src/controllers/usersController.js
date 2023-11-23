@@ -56,12 +56,12 @@ class UsersCotroller {
         return;
       }
 
-      const userExistsPhone = await Users.findOne({
-        phoneNumber: data.phoneNumber,
+      const userExistsEmail = await Users.findOne({
+        email: data.email,
       });
-      if (userExistsPhone) {
+      if (userExistsEmail) {
         res.status(404).json({
-          message: "Số điện thoại đã được đăng ký!",
+          message: "Email đã được đăng ký!",
         });
         return;
       }
@@ -78,7 +78,13 @@ class UsersCotroller {
 
       res.status(200).json({
         message: "Tạo tài khoản thành công!",
-        data: user,
+        data: {
+          id: data._id,
+          account: data.account,
+          fullName: data.fullName,
+          email: data.email,
+          role: data.role,
+        },
       });
     } catch (err) {
       res.status(500).json({
@@ -110,13 +116,13 @@ class UsersCotroller {
         return;
       }
 
-      const userExistsPhone = await Users.findOne({
-        phoneNumber: data.phoneNumber,
+      const userExistsEmail = await Users.findOne({
+        email: data.email,
         _id: { $ne: req.params.id },
       });
-      if (userExistsPhone) {
+      if (userExistsEmail) {
         res.status(404).json({
-          message: "Số điện thoại đã được đăng ký!",
+          message: "Email đã được đăng ký!",
         });
         return;
       }
@@ -157,7 +163,13 @@ class UsersCotroller {
       }
       res.status(200).json({
         message: "Xoá thành công!",
-        data: data,
+        data: {
+          id: data._id,
+          account: data.account,
+          fullName: data.fullName,
+          email: data.email,
+          role: data.role,
+        },
       });
     } catch (err) {
       res.status(500).json({
