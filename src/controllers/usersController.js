@@ -142,7 +142,13 @@ class UsersCotroller {
 
       res.status(200).json({
         message: "Cập nhật tài khoản thành công!",
-        data: user,
+        data: {
+          id: data._id,
+          account: data.account,
+          fullName: data.fullName,
+          email: data.email,
+          role: data.role,
+        },
       });
     } catch (err) {
       res.status(500).json({
