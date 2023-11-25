@@ -77,10 +77,10 @@ class AuthCotroller {
       }
       const data = { ...req.body };
 
-      const user = await Users.findOne({ account: data.account });
+      const user = await Users.findOne({ email: data.email });
       if (!user) {
         res.status(404).json({
-          message: "Tài khoản chưa được đăng ký!",
+          message: "Email hoặc mật khẩu không đúng!",
         });
         return;
       }
@@ -88,7 +88,7 @@ class AuthCotroller {
       const isMath = await bcryptjs.compare(data.password, user.password);
       if (!isMath) {
         res.status(404).json({
-          message: "Mật khẩu không đúng!",
+          message: "Email hoặc mật khẩu không đúng!",
         });
         return;
       }
@@ -96,6 +96,13 @@ class AuthCotroller {
       const accessToken = await jwt.sign({ id: user.id }, SECRET_CODE, {
         expiresIn: "30d",
       });
+
+      if (!accessToken) {
+        res.status(404).json({
+          message: "Token sign fail!",
+        });
+        return;
+      }
       res.status(200).json({
         message: "Đăng nhập thành công!",
         data: {
@@ -107,6 +114,7 @@ class AuthCotroller {
           accessToken: accessToken,
         },
       });
+      return;
     } catch (err) {
       res.status(500).json({
         name: err.name,

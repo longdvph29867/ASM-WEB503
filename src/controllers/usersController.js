@@ -5,9 +5,18 @@ class UsersCotroller {
   async getAll(req, res) {
     try {
       const users = await Users.find();
+      const listUsers = users.map((user) => {
+        return {
+          id: user._id,
+          account: user.account,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+        };
+      });
       res.status(200).json({
         message: "Lấy dữ liệu thành công!",
-        data: users,
+        data: listUsers,
       });
     } catch (err) {
       res.status(500).json({
@@ -27,7 +36,13 @@ class UsersCotroller {
       }
       res.status(200).json({
         message: "Lấy tài khoản thành công!",
-        data: user,
+        data: {
+          id: user._id,
+          account: user.account,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+        },
       });
     } catch (err) {
       res.status(500).json({

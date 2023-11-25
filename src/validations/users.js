@@ -52,9 +52,10 @@ export const userUpdateValid = Joi.object({
 }).options({ abortEarly: false });
 
 export const signInValid = Joi.object({
-  account: Joi.string().required().messages({
-    "string.empty": "Tài khoản không để trống!",
-    "any.required": "Tài khoản là bắt buộc!",
+  email: Joi.string().required().email().messages({
+    "string.empty": "Email không để trống",
+    "any.required": "Email là bắt buộc",
+    "string.email": "Email không đúng định dạng",
   }),
   password: Joi.string().required().messages({
     "string.empty": "Mật khẩu không để trống!",
