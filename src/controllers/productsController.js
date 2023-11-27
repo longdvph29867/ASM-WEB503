@@ -17,7 +17,11 @@ class ProductsCotroller {
       } else if (req.query.gender) {
         products = await Products.find({ gender: req.query.gender });
       } else {
-        products = await Products.find();
+        products = await Products.find().populate(
+          "id_category",
+          "_id categoryName",
+          Categories
+        );
       }
 
       res.status(200).json({

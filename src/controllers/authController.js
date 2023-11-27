@@ -78,6 +78,7 @@ class AuthCotroller {
       const data = { ...req.body };
 
       const user = await Users.findOne({ email: data.email });
+
       if (!user) {
         res.status(404).json({
           message: "Email hoặc mật khẩu không đúng!",
@@ -93,9 +94,13 @@ class AuthCotroller {
         return;
       }
 
-      const accessToken = await jwt.sign({ id: user.id }, SECRET_CODE, {
-        expiresIn: "30d",
-      });
+      const accessToken = jwt.sign(
+        { id: user._id, email: user.email },
+        SECRET_CODE,
+        {
+          expiresIn: "30d",
+        }
+      );
 
       if (!accessToken) {
         res.status(404).json({

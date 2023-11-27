@@ -14,6 +14,7 @@ const categoriesSchema = new mongoose.Schema(
   {
     collection: "Categories",
     versionKey: false,
+    timestamps: true,
   }
 );
 const Categories = mongoose.model("Categories", categoriesSchema);
