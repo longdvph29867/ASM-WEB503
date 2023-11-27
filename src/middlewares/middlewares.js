@@ -14,7 +14,6 @@ export const checkPermission = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, SECRET_CODE);
-    console.log(decoded);
     const user = await Users.findById(decoded.id);
     if (!user) {
       return res.status(403).json({

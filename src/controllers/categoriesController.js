@@ -43,7 +43,6 @@ class CategoriesController {
 
       const data = { ...req.body };
       data.slug = slugify(data.categoryName, { lower: true });
-      console.log(data);
 
       const categoryExists = await Categories.findOne({
         slug: data.slug,
