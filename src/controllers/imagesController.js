@@ -1,13 +1,20 @@
 import cloudinary from "../utils/cloudinaryConfig.js";
+import { validateFiles } from "../validations/images.js";
 
 class ImagesController {
   async uploadImages(req, res) {
+    const validationFiles = validateFiles(req.files);
+    if (validationFiles) {
+      return res.status(403).json({ message: validationFiles });
+    }
     try {
-      const images = req.files.map((file) => file.path);
+      const images = req.files;
       const uploadedImages = [];
 
       for (let image of images) {
-        const results = await cloudinary.uploader.upload(image);
+        const results = await cloudinary.uploader.upload(image.path, {
+          public_id: image.filename,
+        });
         uploadedImages.push({
           url: results.secure_url,
           publicId: results.public_id,
@@ -16,7 +23,7 @@ class ImagesController {
 
       return res.status(200).json({
         message: "Thêm ảnh thành công",
-        datas: uploadedImages,
+        data: uploadedImages,
       });
     } catch (error) {
       res.status(500).json({

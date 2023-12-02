@@ -6,6 +6,12 @@ class CategoriesController {
   async getAll(req, res) {
     try {
       const categories = await Categories.find();
+      if (!categories) {
+        res.status(400).json({
+          message: "Danh mục trống!",
+        });
+        return;
+      }
       res.status(200).json({ data: categories });
     } catch (err) {
       res.status(500).json({
@@ -17,7 +23,15 @@ class CategoriesController {
 
   async getDetail(req, res) {
     try {
-      const category = await Categories.findOne({ slug: req.params.slug });
+      const category = await Categories.findOne({
+        categorySlug: req.params.slug,
+      });
+      if (!category) {
+        res.status(400).json({
+          message: "Danh mục không tồn tại!",
+        });
+        return;
+      }
       res.status(200).json({
         message: "Lấy dữ liệu thành công!",
         data: category,
@@ -42,10 +56,10 @@ class CategoriesController {
       }
 
       const data = { ...req.body };
-      data.slug = slugify(data.categoryName, { lower: true });
+      data.categorySlug = slugify(data.categoryName, { lower: true });
 
       const categoryExists = await Categories.findOne({
-        slug: data.slug,
+        categorySlug: data.categorySlug,
       });
       if (categoryExists) {
         res.status(404).json({
@@ -53,6 +67,8 @@ class CategoriesController {
         });
         return;
       }
+      console.log(data);
+
       const category = await Categories.create(data);
       if (!category) {
         res.status(404).json({
@@ -83,10 +99,10 @@ class CategoriesController {
       }
 
       const data = { ...req.body };
-      data.slug = slugify(data.categoryName, { lower: true });
-      if (data.slug != req.params.slug) {
+      data.categorySlug = slugify(data.categoryName, { lower: true });
+      if (data.categorySlug != req.params.slug) {
         const categoryExists = await Categories.findOne({
-          slug: data.slug,
+          categorySlug: data.categorySlug,
         });
         if (categoryExists) {
           res.status(404).json({
@@ -97,7 +113,7 @@ class CategoriesController {
       }
 
       const category = await Categories.findOneAndUpdate(
-        { slug: req.params.slug },
+        { categorySlug: req.params.slug },
         data,
         {
           new: true,

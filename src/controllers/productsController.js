@@ -39,6 +39,12 @@ class ProductsCotroller {
   async getDetail(req, res) {
     try {
       const product = await Products.findOne({ slug: req.params.slug });
+      if (!product) {
+        res.status(400).json({
+          message: "Sản phẩm không tồn tại!",
+        });
+        return;
+      }
       res.status(200).json({
         message: "Lấy dữ liệu thành công!",
         data: product,

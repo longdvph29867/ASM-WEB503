@@ -1,7 +1,7 @@
 import Users from "../models/Users.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { signInValid, userValid } from "../validations/users.js";
+import { signInValid, userValidSignUp } from "../validations/users.js";
 import dotenv from "dotenv";
 dotenv.config();
 const { SECRET_CODE } = process.env;
@@ -9,7 +9,7 @@ class AuthCotroller {
   async signUp(req, res) {
     try {
       // validation
-      const { error } = userValid.validate(req.body);
+      const { error } = userValidSignUp.validate(req.body);
       if (error) {
         res.status(400).json({
           message: error.details.map((item) => item.message),

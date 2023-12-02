@@ -6,7 +6,7 @@ const categoriesSchema = new mongoose.Schema(
       type: String,
       maxLength: 255,
     },
-    slug: {
+    categorySlug: {
       type: String,
       maxLength: 255,
     },
