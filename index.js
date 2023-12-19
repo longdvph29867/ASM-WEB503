@@ -46,11 +46,11 @@ const options = {
   cors: true,
 };
 
-const spacs = swaggerJsdoc(options);
+const specs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
   swaggerUI.serve,
-  swaggerUI.setup(spacs, { customCssUrl: CSS_URL })
+  swaggerUI.setup(specs, { customCssUrl: CSS_URL })
 );
 
 app.use("/", router);
