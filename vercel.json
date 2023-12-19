@@ -12,9 +12,6 @@
         "src": "/(.*)",
         "dest": "/"
       },
-      { "handle": "filesystem" },
-    { "src": "/v1/docs/(.*)", "dest": "/src/docs/$1" },
-    { "src": "/v1/(.*)", "dest": "/src/routes/$1" },
-    { "src": ".*", "dest": "/index.js" }
+      { "src": "/api-docs/(.*)", "dest": "/" }
     ]
   }
