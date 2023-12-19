@@ -43,7 +43,7 @@ const options = {
       },
     },
   },
-  apis: ["./src/routes/**/*.js"],
+  apis: ["./src/**/*.js"],
   cors: true,
 };
 
