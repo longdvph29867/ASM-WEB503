@@ -10,8 +10,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 const URI_DB = process.env.URI_DB;
 const app = express();
-const CSS_URL =
-  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+// const CSS_URL =
+//   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 app.use(express.json());
 app.use(cors());
 connectDB(URI_DB);
@@ -47,11 +47,7 @@ const options = {
 };
 
 const spacs = swaggerJsdoc(options);
-app.use(
-  "/api-docs",
-  swaggerUI.serve,
-  swaggerUI.setup(spacs, { customCssUrl: CSS_URL })
-);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(spacs));
 
 app.use("/", router);
 
