@@ -50,7 +50,20 @@ const specs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
   swaggerUI.serve,
-  swaggerUI.setup(specs, { customCssUrl: CSS_URL })
+  swaggerUI.setup(specs, {
+    customCss: `
+  @import url('${CSS_URL}');
+  /* Your custom CSS styles here */
+  .opblock-summary-path-description-wrapper {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    padding: 0 10px;
+    width: 100%;
+  }
+`,
+  })
 );
 
 app.use("/", router);
