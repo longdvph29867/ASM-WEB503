@@ -16,60 +16,36 @@ app.use(express.json());
 app.use(cors());
 connectDB(URI_DB);
 
-// const options = {
-//   definition: {
-//     openapi: "3.0.0",
-//     info: {
-//       title: "Express API with Swagger",
-//       version: "0.1.0",
-//       description: "My API Documentation",
-//     },
-//     servers: [
-//       {
-//         url: "http://localhost:8000/",
-//       },
-//       {
-//         url: "https://asm-web-503.vercel.app/",
-//       },
-//     ],
-//     components: {
-//       securitySchemes: {
-//         JWT: {
-//           type: "apiKey",
-//           in: "header",
-//           name: "Authorization",
-//         },
-//       },
-//     },
-//   },
-//   apis: ["./src/**/*.js"],
-//   cors: true,
-// };
-
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Library API",
-      version: "1.0.0",
-      description: "A simple Express Library API",
-      termsOfService: "http://example.com/terms/",
-      contact: {
-        name: "API Support",
-        url: "http://www.exmaple.com/support",
-        email: "support@example.com",
-      },
+      title: "Express API with Swagger",
+      version: "0.1.0",
+      description: "My API Documentation",
     },
     servers: [
       {
-        url: "https://nodejs-swagger-api.vercel.app/",
-        description: "My API Documentation",
+        url: "http://localhost:8000/",
+      },
+      {
+        url: "https://asm-web-503.vercel.app/",
       },
     ],
+    components: {
+      securitySchemes: {
+        JWT: {
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
+        },
+      },
+    },
   },
-  // This is to call all the file
-  apis: ["src/**/*.js"],
+  apis: ["./src/**/*.js"],
+  cors: true,
 };
+
 const specs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
