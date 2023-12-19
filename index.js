@@ -4,7 +4,7 @@ import router from "./src/routes/index.js";
 import cors from "cors";
 import dotenv from "dotenv";
 import swaggerJsdoc from "swagger-jsdoc";
-import swaggerui from "swagger-ui-express";
+import swaggerUI from "swagger-ui-express";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -13,7 +13,7 @@ const app = express();
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 app.use(express.json());
-
+app.use(cors());
 connectDB(URI_DB);
 
 const options = {
@@ -22,8 +22,7 @@ const options = {
     info: {
       title: "Express API with Swagger",
       version: "0.1.0",
-      description:
-        "This is a API application made with Express and documented with Swagger",
+      description: "My API Documentation",
     },
     servers: [
       {
@@ -50,11 +49,11 @@ const options = {
 const spacs = swaggerJsdoc(options);
 app.use(
   "/api-docs",
-  swaggerui.serve,
-  swaggerui.setup(spacs, { customCssUrl: CSS_URL })
+  swaggerUI.serve,
+  swaggerUI.setup(spacs, { customCssUrl: CSS_URL })
 );
 
-app.use("/", cors({ origin: "*" }), router);
+app.use("/", router);
 
 app.listen(PORT, () => {
   console.log("Listen", PORT);
