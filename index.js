@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerui from "swagger-ui-express";
+
 dotenv.config();
 const PORT = process.env.PORT;
 const URI_DB = process.env.URI_DB;
@@ -14,7 +15,6 @@ const CSS_URL =
 app.use(express.json());
 
 connectDB(URI_DB);
-app.use("/", cors({ origin: "*" }), router);
 
 const options = {
   definition: {
@@ -53,6 +53,8 @@ app.use(
   swaggerui.serve,
   swaggerui.setup(spacs, { customCssUrl: CSS_URL })
 );
+
+app.use("/", cors({ origin: "*" }), router);
 
 app.listen(PORT, () => {
   console.log("Listen", PORT);
